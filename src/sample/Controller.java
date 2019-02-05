@@ -79,10 +79,6 @@ public class Controller implements Initializable {
 
     static ThreadController controller;
 
-    private void handleButtonAction(ActionEvent event) {
-
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

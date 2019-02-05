@@ -18,10 +18,10 @@ public class MyProcess extends Thread {
     MyProcess leftNeighbour;
     MyProcess rightNeighbour;
 
-    public MyProcess(ThreadController c, int id, Ram ra){
+    public MyProcess(ThreadController c, int id, Ram ram){
         controller = c;
         this.id = id;
-        recieveRam(ra);
+        receiveRam(ram);
 
         controller.myController.updateProcessView(this);
     }
@@ -29,17 +29,16 @@ public class MyProcess extends Thread {
     @Override
     public void run() {
 
-        int leftone = ((id-1) + controller.n) % controller.n;
-        int rightone = ((id+1) + controller.n) % controller.n;
+        int leftOne = ((id-1) + controller.n) % controller.n;
+        int rightOne = ((id+1) + controller.n) % controller.n;
 
-        leftNeighbour = controller.getProcessById(leftone);
-        rightNeighbour = controller.getProcessById(rightone);
+        leftNeighbour = controller.getProcessById(leftOne);
+        rightNeighbour = controller.getProcessById(rightOne);
 
         while(true){
 
             while(!finished){
                 controller.myController.updateProcessView(this);
-
 
                 sendRamTo(leftNeighbour.getMyId());
                 sendRamTo(rightNeighbour.getMyId());
@@ -56,10 +55,10 @@ public class MyProcess extends Thread {
 
 
 
-    public synchronized Boolean recieveRam(Ram r){
+    public synchronized Boolean receiveRam(Ram r){
         if(!finished){
             if(ThreadController.outputs)
-                System.out.println("\treciever=" + this);
+                System.out.println("\treceiver=" + this);
             if(firstRam == null){
                 if(ThreadController.outputs)
                     System.out.println("\t\tfirstRam");
@@ -72,7 +71,6 @@ public class MyProcess extends Thread {
                 finished = true;
                 if(ThreadController.outputs)
                     System.out.println("\t\tsecondRam");
-                //System.out.println(">> fertig : " + this );
             }
             controller.myController.updateProcessView(this);
             return true;
@@ -80,7 +78,6 @@ public class MyProcess extends Thread {
         return false;
     }
     public synchronized void finishAction(){
-
 
         if(firstRam != null)
             firstRam.makeDirty();
@@ -116,13 +113,12 @@ public class MyProcess extends Thread {
 
         controller.myController.updateProcessView(this);
         MyProcess p = controller.getProcessById(reciever);
-        //System.out.println("sender=" + this);
         if(secondRam != null && secondRam.isDirty()){
             if(ThreadController.outputs)
                 System.out.println("Ram From: " + this + " to: " + reciever);
 
             secondRam.clean();
-            if(p.recieveRam(secondRam))
+            if(p.receiveRam(secondRam))
                 secondRam = null;
 
         }
@@ -131,7 +127,7 @@ public class MyProcess extends Thread {
                 System.out.println("Ram From: " + this + " to: " + reciever);
 
             firstRam.clean();
-            if(p.recieveRam(firstRam))
+            if(p.receiveRam(firstRam))
                 firstRam = null;
 
         }

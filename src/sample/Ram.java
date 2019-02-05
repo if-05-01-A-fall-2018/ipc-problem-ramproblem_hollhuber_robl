@@ -13,8 +13,6 @@ public class Ram {
         return "ram{id=" + this.id +" dirty=" + dirty.toString()+"}";
     }
 
-    public Integer getMyId(){return id;}
-
     public Boolean isDirty(){return dirty;}
 
     void clean() {
@@ -25,9 +23,4 @@ public class Ram {
     {
         dirty = true;
     }
-
-    boolean isClean() {
-        return !dirty;
-    }
-
 }
