@@ -77,7 +77,7 @@ public class Controller implements Initializable {
     Image imageProcessDone;
     Image imageProcessWorking;
 
-    static controllerWithThread controller;
+    static ThreadController controller;
 
     private void handleButtonAction(ActionEvent event) {
 
@@ -107,7 +107,7 @@ public class Controller implements Initializable {
         initRams = new ImageView[] {ivRamOne , ivRamTwo , ivRamThree , ivRamFour , ivRamFive};
         processes = new ImageView[] {ivProcessOne,ivProcessTwo,ivProcessThree,ivProcessFour,ivProcessFive};
 
-        controller = new controllerWithThread(this);
+        controller = new ThreadController(this);
         controller.setDaemon(true);
         controller.start();
     }

@@ -4,7 +4,7 @@ public class MyProcess extends Thread {
 
     private Ram firstRam = null;
     private Ram secondRam = null;
-    private controllerWithThread controller = null;
+    private ThreadController controller = null;
     private int id;
     private Boolean finished = false;
 
@@ -18,7 +18,7 @@ public class MyProcess extends Thread {
     MyProcess leftNeighbour;
     MyProcess rightNeighbour;
 
-    public MyProcess(controllerWithThread c, int id, Ram ra){
+    public MyProcess(ThreadController c, int id, Ram ra){
         controller = c;
         this.id = id;
         recieveRam(ra);
@@ -58,10 +58,10 @@ public class MyProcess extends Thread {
 
     public synchronized Boolean recieveRam(Ram r){
         if(!finished){
-            if(controllerWithThread.outputs)
+            if(ThreadController.outputs)
                 System.out.println("\treciever=" + this);
             if(firstRam == null){
-                if(controllerWithThread.outputs)
+                if(ThreadController.outputs)
                     System.out.println("\t\tfirstRam");
 
 
@@ -70,7 +70,7 @@ public class MyProcess extends Thread {
             else{
                 secondRam = r;
                 finished = true;
-                if(controllerWithThread.outputs)
+                if(ThreadController.outputs)
                     System.out.println("\t\tsecondRam");
                 //System.out.println(">> fertig : " + this );
             }
@@ -118,7 +118,7 @@ public class MyProcess extends Thread {
         MyProcess p = controller.getProcessById(reciever);
         //System.out.println("sender=" + this);
         if(secondRam != null && secondRam.isDirty()){
-            if(controllerWithThread.outputs)
+            if(ThreadController.outputs)
                 System.out.println("Ram From: " + this + " to: " + reciever);
 
             secondRam.clean();
@@ -127,7 +127,7 @@ public class MyProcess extends Thread {
 
         }
         else if(firstRam != null && firstRam.isDirty()){
-            if(controllerWithThread.outputs)
+            if(ThreadController.outputs)
                 System.out.println("Ram From: " + this + " to: " + reciever);
 
             firstRam.clean();
@@ -143,9 +143,8 @@ public class MyProcess extends Thread {
     public String toString() {
         return "MyProcess{id=" + this.id + " firstRam=" + firstRam + " secondRam=" + secondRam + " finished=" + finished+"}";
     }
+
     public String infos(){
-
-
         String ret = "";
         if(firstRam == null)
             ret += '0';

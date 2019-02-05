@@ -1,6 +1,6 @@
 package sample;
 
-public class controllerWithThread extends Thread {
+public class ThreadController extends Thread {
     public static Boolean outputs = false;
     public final int n = 5;//amount of "dining philosophers"
     MyProcess[] processes = new MyProcess[n];
@@ -27,7 +27,7 @@ public class controllerWithThread extends Thread {
     }
 
 
-    public controllerWithThread(Controller con){
+    public ThreadController(Controller con){
         this.myController = con;
     }
 
